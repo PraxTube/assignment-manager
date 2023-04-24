@@ -20,7 +20,7 @@ def confirmation_prompt():
         inquirer.List(
             "confirmation",
             message="Are you sure you want to continue?",
-            choices=["Yes", "No"]
+            choices=["Yes", "No"],
         )
     ]
     return inquirer.prompt(question)["confirmation"] == "Yes"
@@ -28,11 +28,13 @@ def confirmation_prompt():
 
 def add_assignment_response():
     questions = [
-      inquirer.Text("name", message="Name of course"),
-      inquirer.Text("start_date", message="First published date"),
-      inquirer.Text("end_date", message="When is the deadline"),
-      inquirer.Text("torus", message="How many days until the next assignment (torus)"),
-      inquirer.Text("amount", message="Number of total assignments"),
+        inquirer.Text("name", message="Name of course"),
+        inquirer.Text("start_date", message="First published date"),
+        inquirer.Text("end_date", message="When is the deadline"),
+        inquirer.Text(
+            "torus", message="How many days until the next assignment (torus)"
+        ),
+        inquirer.Text("amount", message="Number of total assignments"),
     ]
     answers = inquirer.prompt(questions)
     return (
@@ -40,7 +42,7 @@ def add_assignment_response():
         answers["start_date"],
         answers["end_date"],
         int(answers["torus"]),
-        int(answers["amount"])
+        int(answers["amount"]),
     )
 
 
@@ -49,7 +51,7 @@ def update_assignment_response_course(course_choices):
         inquirer.List(
             "name",
             message="Which course do you want to update?",
-            choices=course_choices
+            choices=course_choices,
         ),
     ]
     return inquirer.prompt(question_course)["name"]
@@ -58,14 +60,10 @@ def update_assignment_response_course(course_choices):
 def update_assignment_response(cycle_choices, progress_choices):
     questions = [
         inquirer.List(
-            "cycle",
-            message="Which cycle do you want to update?",
-            choices=cycle_choices
+            "cycle", message="Which cycle do you want to update?", choices=cycle_choices
         ),
         inquirer.List(
-            "progress",
-            message="New progress status",
-            choices=progress_choices
+            "progress", message="New progress status", choices=progress_choices
         ),
     ]
     answers = inquirer.prompt(questions)

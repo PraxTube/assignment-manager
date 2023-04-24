@@ -8,10 +8,8 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="assignment-manager",
-    version="0.1.0",
-    description=(
-        "Manage reoccuring assignments and tasks."
-    ),
+    version="0.1.2",
+    description=("Manage reoccuring assignments and tasks."),
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/PraxTube/assignment-manager",
@@ -32,7 +30,7 @@ setup(
     packages=find_packages(where="src"),
     include_package_data=True,
     python_requires=">=3.8, <4",
-    install_requires=["inquirer", "typer"],
+    install_requires=["rich", "typer", "inquirer"],
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
     # syntax, for example:

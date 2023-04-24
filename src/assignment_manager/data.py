@@ -19,7 +19,7 @@ def load_data():
     with open(get_data_file_path(), "r") as f:
         data = json.load(f)
     return data
-   
+
 
 def write_data(data):
     with open(get_data_file_path(), "w") as f:

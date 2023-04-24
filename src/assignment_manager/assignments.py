@@ -1,8 +1,6 @@
 from datetime import datetime, timedelta
 
-from assignment_manager.data import (
-    Progress, load_data, write_data
-)
+from assignment_manager.data import Progress, load_data, write_data
 from assignment_manager import io
 
 
@@ -16,21 +14,18 @@ def _find_next_deadline(assignment_data):
 
 def show_all_assignments():
     data = load_data()
-    table_headers = [
-        "Name",
-        "Start",
-        "Deadline",
-        "Progress"
-    ]
+    table_headers = ["Name", "Start", "Deadline", "Progress"]
     table_rows = []
     for key in data:
         cycle = _find_next_deadline(data[key])
-        table_rows.append([
-            key,
-            data[key][cycle][0],
-            data[key][cycle][1],
-            Progress(data[key][cycle][2]).name
-        ])
+        table_rows.append(
+            [
+                key,
+                data[key][cycle][0],
+                data[key][cycle][1],
+                Progress(data[key][cycle][2]).name,
+            ]
+        )
     io.print_table(table_headers, table_rows)
 
 
@@ -39,18 +34,10 @@ def show_specific_assignment(name):
     if not name in data:
         raise ValueError("The given course doesn't exist", name)
 
-    table_headers = [
-        "Start",
-        "Deadline",
-        "Progress"
-    ]
+    table_headers = ["Start", "Deadline", "Progress"]
     table_rows = []
     for data_entry in data[name]:
-        table_rows.append([
-            data_entry[0],
-            data_entry[1],
-            Progress(data_entry[2]).name
-        ])
+        table_rows.append([data_entry[0], data_entry[1], Progress(data_entry[2]).name])
     io.print_table(table_headers, table_rows)
 
 
