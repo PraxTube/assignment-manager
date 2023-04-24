@@ -1,3 +1,4 @@
+import os
 import json
 from enum import Enum
 
@@ -10,12 +11,16 @@ class Progress(Enum):
     DONE = 4
 
 
+def get_data_file_path():
+    return os.path.join(os.path.dirname(__file__), "data.json")
+
+
 def load_data():
-    with open("data.json", "r") as f:
+    with open(get_data_file_path(), "r") as f:
         data = json.load(f)
     return data
    
 
 def write_data(data):
-    with open("data.json", "w") as f:
+    with open(get_data_file_path(), "w") as f:
         json.dump(data, f, indent=4)

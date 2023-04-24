@@ -53,7 +53,7 @@ setup(
             "assignment-manager=assignment_manager:main.main",
         ],
     },
-    project_urls={  # Optional
+    project_urls={
         "Bug Reports": "https://github.com/PraxTube/assignment-manager/issues",
         "Source": "https://github.com/PraxTube/assignment-manager",
     },
