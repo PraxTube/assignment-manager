@@ -68,7 +68,7 @@ def add_assignment():
 
 def update_assignment():
     data = load_data()
-    name = io.update_assignment_response_course(data.keys())
+    name = io.course_response(data.keys())
     if name not in data.keys():
         raise ValueError("Name doesn't exist!", name)
 
@@ -80,13 +80,17 @@ def update_assignment():
     write_data(data)
 
 
-def remove_assignment(name):
+def remove_assignment():
     data = load_data()
+    name = io.course_response(data.keys())
     if name not in data.keys():
         raise ValueError("Name doesn't exist!", name)
 
-    if not io.confirmation_prompt():
-        print("[bold]Aborting...[/bold]")
+    confirmation_msg = "This will delete [bold]ALL[/bold] data for the course: [bold]{}[/bold]\n".format(
+        name
+    )
+
+    if not io.confirmation_prompt(confirmation_msg):
         return
 
     data.pop(name)

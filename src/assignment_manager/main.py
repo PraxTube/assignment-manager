@@ -27,8 +27,8 @@ def update():
 
 
 @app.command()
-def remove(name):
-    assignments.remove_assignment(name)
+def remove():
+    assignments.remove_assignment()
 
 
 def main():

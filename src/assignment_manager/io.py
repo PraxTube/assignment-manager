@@ -15,7 +15,10 @@ def print_table(table_headers, table_rows):
     print(table)
 
 
-def confirmation_prompt():
+def confirmation_prompt(msg=""):
+    if msg != "":
+        print(msg)
+
     question = [
         inquirer.List(
             "confirmation",
@@ -23,7 +26,10 @@ def confirmation_prompt():
             choices=["Yes", "No"],
         )
     ]
-    return inquirer.prompt(question)["confirmation"] == "Yes"
+    if inquirer.prompt(question)["confirmation"] == "Yes":
+        return True
+    print("[bold]Aborting...[/bold]")
+    return False
 
 
 def add_assignment_response():
@@ -46,7 +52,7 @@ def add_assignment_response():
     )
 
 
-def update_assignment_response_course(course_choices):
+def course_response(course_choices):
     question_course = [
         inquirer.List(
             "name",
