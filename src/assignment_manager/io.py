@@ -77,3 +77,10 @@ def update_assignment_response(cycle_choices, progress_choices):
     progress = progress_choices.index(answers["progress"])
 
     return (cycle, progress)
+
+
+def rename_assignment_response():
+    question = [
+        inquirer.Text("name", message="What's the new name of the course?")
+    ]
+    return inquirer.prompt(question)["name"]

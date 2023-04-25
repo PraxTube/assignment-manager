@@ -29,6 +29,11 @@ def update():
 
 
 @app.command()
+def rename():
+    assignments.rename_assignment()
+
+
+@app.command()
 def remove():
     assignments.remove_assignment()
 

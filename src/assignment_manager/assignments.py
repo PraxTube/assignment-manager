@@ -70,8 +70,8 @@ def add_assignment():
     else:
         data = load_data()
 
-    if params[0] in data.keys():
-        raise ValueError("Name already exists!", name)
+    if params[0] in data:
+        raise ValueError("Name already exists!", name, data.keys())
 
     progress = generate_dates(params[1], params[2], params[3], params[4])
     data[params[0]] = progress
@@ -87,6 +87,18 @@ def update_assignment():
     cycle, progress = io.update_assignment_response(cycle_choices, progress_choices)
 
     data[name][cycle][2] = progress
+    write_data(data)
+
+
+def rename_assignment():
+    data = load_data()
+    old_name = io.course_response(data.keys())
+    new_name = io.rename_assignment_response()
+
+    if new_name in data:
+        raise ValueError("The name already exists!", new_name, data.keys())
+
+    data[new_name] = data.pop(old_name)
     write_data(data)
 
 
