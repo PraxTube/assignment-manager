@@ -14,11 +14,11 @@ def add():
 
 
 @app.command()
-def show(name=""):
-    if name == "":
+def show(one:bool=False):
+    if one:
+        assignments.show_specific_assignment()
+    else:
         assignments.show_all_assignments()
-        return
-    assignments.show_specific_assignment(name)
 
 
 @app.command()

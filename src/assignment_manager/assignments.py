@@ -29,10 +29,9 @@ def show_all_assignments():
     io.print_table(table_headers, table_rows)
 
 
-def show_specific_assignment(name):
+def show_specific_assignment():
     data = load_data()
-    if not name in data:
-        raise ValueError("The given course doesn't exist", name)
+    name = io.course_response(data.keys())
 
     table_headers = ["Start", "Deadline", "Progress"]
     table_rows = []
@@ -69,8 +68,6 @@ def add_assignment():
 def update_assignment():
     data = load_data()
     name = io.course_response(data.keys())
-    if name not in data.keys():
-        raise ValueError("Name doesn't exist!", name)
 
     cycle_choices = [d for d in data[name]]
     progress_choices = [p.name for p in Progress]
@@ -83,8 +80,6 @@ def update_assignment():
 def remove_assignment():
     data = load_data()
     name = io.course_response(data.keys())
-    if name not in data.keys():
-        raise ValueError("Name doesn't exist!", name)
 
     confirmation_msg = "This will delete [bold]ALL[/bold] data for the course: [bold]{}[/bold]\n".format(
         name
