@@ -1,6 +1,14 @@
 from datetime import datetime, timedelta
 
-from assignment_manager.data import Progress, load_data, write_data
+from assignment_manager.data import (
+    Progress,
+    load_data,
+    write_data,
+    data_file_empty,
+    backup_file_empty,
+    copy_backup as data_copy_backup,
+    paste_backup as data_paste_backup,
+)
 from assignment_manager import io
 
 
@@ -56,7 +64,12 @@ def generate_dates(start_date, deadline, torus, number_of_assignments):
 
 def add_assignment():
     params = io.add_assignment_response()
-    data = load_data()
+
+    if data_file_empty():
+        data = {}
+    else:
+        data = load_data()
+
     if params[0] in data.keys():
         raise ValueError("Name already exists!", name)
 
@@ -90,3 +103,27 @@ def remove_assignment():
 
     data.pop(name)
     write_data(data)
+
+
+def copy_backup():
+    if data_file_empty():
+        raise ValueError("The data file is empty. No backup will be made.")
+
+    confirmation_msg = "This will OVERWRITE the old BACKUP file if there is one."
+
+    if not io.confirmation_prompt(confirmation_msg):
+        return
+
+    data_copy_backup()
+
+
+def paste_backup():
+    if backup_file_empty():
+        raise ValueError("The backup file is empty. Will not overwrite data.")
+
+    confirmation_msg = "This will OVERWRITE the old DATA file if there is one."
+
+    if not io.confirmation_prompt(confirmation_msg):
+        return
+
+    data_paste_backup()
