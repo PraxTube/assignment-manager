@@ -6,7 +6,9 @@ import inquirer
 def print_table(table_headers, table_rows):
     if len(table_headers) != len(table_rows[0]):
         raise ValueError(
-            "The length of the given lists must match", table_headers, table_rows
+            "The length of the given lists must match",
+            table_headers,
+            table_rows,
         )
 
     table = RichTable(*table_headers)
@@ -66,7 +68,9 @@ def course_response(course_choices):
 def update_assignment_response(cycle_choices, progress_choices):
     questions = [
         inquirer.List(
-            "cycle", message="Which cycle do you want to update?", choices=cycle_choices
+            "cycle",
+            message="Which cycle do you want to update?",
+            choices=cycle_choices,
         ),
         inquirer.List(
             "progress", message="New progress status", choices=progress_choices

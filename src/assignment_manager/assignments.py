@@ -26,11 +26,18 @@ def show_all_assignments():
     table_rows = []
     for key in data:
         cycle = _find_next_deadline(data[key])
+        deadline = "{} ({})".format(
+            data[key][cycle][1],
+            (
+                datetime.strptime(data[key][cycle][1], "%d.%m.%Y")
+                - datetime.today()
+            ).days,
+        )
         table_rows.append(
             [
                 key,
                 data[key][cycle][0],
-                data[key][cycle][1],
+                deadline,
                 Progress(data[key][cycle][2]).name,
             ]
         )
@@ -44,7 +51,9 @@ def show_specific_assignment():
     table_headers = ["Start", "Deadline", "Progress"]
     table_rows = []
     for data_entry in data[name]:
-        table_rows.append([data_entry[0], data_entry[1], Progress(data_entry[2]).name])
+        table_rows.append(
+            [data_entry[0], data_entry[1], Progress(data_entry[2]).name]
+        )
     io.print_table(table_headers, table_rows)
 
 
@@ -84,7 +93,9 @@ def update_assignment():
 
     cycle_choices = [d for d in data[name]]
     progress_choices = [p.name for p in Progress]
-    cycle, progress = io.update_assignment_response(cycle_choices, progress_choices)
+    cycle, progress = io.update_assignment_response(
+        cycle_choices, progress_choices
+    )
 
     data[name][cycle][2] = progress
     write_data(data)
@@ -106,8 +117,9 @@ def remove_assignment():
     data = load_data()
     name = io.course_response(data.keys())
 
-    confirmation_msg = "This will delete [bold]ALL[/bold] data for the course: [bold]{}[/bold]\n".format(
-        name
+    confirmation_msg = (
+        "This will delete [bold]ALL[/bold] data for "
+        "the course: [bold]{}[/bold]\n".format(name)
     )
 
     if not io.confirmation_prompt(confirmation_msg):
@@ -121,7 +133,9 @@ def copy_backup():
     if data_file_empty():
         raise ValueError("The data file is empty. No backup will be made.")
 
-    confirmation_msg = "This will OVERWRITE the old BACKUP file if there is one."
+    confirmation_msg = (
+        "This will OVERWRITE the old BACKUP file if there is one."
+    )
 
     if not io.confirmation_prompt(confirmation_msg):
         return
