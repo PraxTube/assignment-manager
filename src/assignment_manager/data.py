@@ -2,10 +2,10 @@ import os
 import shutil
 from pathlib import Path
 import json
-from enum import Enum
+from enum import IntEnum
 
 
-class Progress(Enum):
+class Progress(IntEnum):
     NOT_STARTED = 0
     JUST_STARTED = 1
     IN_PROGRESS = 2

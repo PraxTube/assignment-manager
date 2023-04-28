@@ -20,33 +20,69 @@ def _find_next_deadline(assignment_data):
     return len(assignment_data) - 1
 
 
-def show_all_assignments():
+def sort_data(row_data, sort_index, ascending=True):
+    if sort_index < 0 or sort_index >= len(row_data):
+        raise ValueError(
+            "The given index must be in range of the row_data",
+            sort_index,
+            row_data,
+        )
+
+    row_data.sort(key=lambda x: x[sort_index], reverse=not ascending)
+
+
+def get_table_rows():
     data = load_data()
-    table_headers = ["Name", "Start", "Deadline", "Progress"]
     table_rows = []
     for key in data:
         cycle = _find_next_deadline(data[key])
-        deadline = "{} ({})".format(
-            data[key][cycle][1],
-            (
-                datetime.strptime(data[key][cycle][1], "%d.%m.%Y")
-                - datetime.today()
-            ).days,
-        )
+        remaing_days = (
+            datetime.strptime(data[key][cycle][1], "%d.%m.%Y")
+            - datetime.today()
+        ).days
         table_rows.append(
             [
                 key,
-                data[key][cycle][0],
-                deadline,
-                Progress(data[key][cycle][2]).name,
+                datetime.strptime(data[key][cycle][0], "%d.%m.%Y"),
+                datetime.strptime(data[key][cycle][1], "%d.%m.%Y"),
+                Progress(data[key][cycle][2]),
+                remaing_days,
             ]
         )
+    return table_rows
+
+
+def show_all_assignments(sort):
+    table_headers = ["Name", "Start", "Deadline", "Progress", "Days"]
+    table_rows = get_table_rows()
+
+    if sort:
+        sort_index = table_headers.index(
+            io.list_prompt(table_headers, "Which to sort by?")
+        )
+        ascending = io.binary_prompt("Sort ascending?")
+    else:
+        sort_index = 4
+        ascending = True
+
+    table_headers[sort_index] += " ▼" if ascending else " ▲"
+    sort_data(table_rows, sort_index, ascending)
+
+    for i in range(len(table_rows)):
+        table_rows[i] = [
+            table_rows[i][0],
+            table_rows[i][1].strftime("%d.%m.%Y"),
+            table_rows[i][2].strftime("%d.%m.%Y"),
+            table_rows[i][3].name,
+            str(table_rows[i][4]),
+        ]
+
     io.print_table(table_headers, table_rows)
 
 
 def show_specific_assignment():
     data = load_data()
-    name = io.course_response(data.keys())
+    name = io.list_prompt(data.keys(), "Which course do you want to update?")
 
     table_headers = ["Start", "Deadline", "Progress"]
     table_rows = []
@@ -89,7 +125,7 @@ def add_assignment():
 
 def update_assignment():
     data = load_data()
-    name = io.course_response(data.keys())
+    name = io.list_prompt(data.keys(), "Which course do you want to update?")
 
     cycle_choices = [d for d in data[name]]
     progress_choices = [p.name for p in Progress]
@@ -103,7 +139,9 @@ def update_assignment():
 
 def rename_assignment():
     data = load_data()
-    old_name = io.course_response(data.keys())
+    old_name = io.list_prompt(
+        data.keys(), "Which course do you want to update?"
+    )
     new_name = io.rename_assignment_response()
 
     if new_name in data:
@@ -115,7 +153,7 @@ def rename_assignment():
 
 def remove_assignment():
     data = load_data()
-    name = io.course_response(data.keys())
+    name = io.list_prompt(data.keys(), "Which course do you want to update?")
 
     confirmation_msg = (
         "This will delete [bold]ALL[/bold] data for "

@@ -21,14 +21,7 @@ def confirmation_prompt(msg=""):
     if msg != "":
         print(msg)
 
-    question = [
-        inquirer.List(
-            "confirmation",
-            message="Are you sure you want to continue?",
-            choices=["Yes", "No"],
-        )
-    ]
-    if inquirer.prompt(question)["confirmation"] == "Yes":
+    if binary_prompt("Are you sure you want to continue?"):
         return True
     print("[bold]Aborting...[/bold]")
     return False
@@ -54,15 +47,28 @@ def add_assignment_response():
     )
 
 
-def course_response(course_choices):
-    question_course = [
+def binary_prompt(msg):
+    question = [
         inquirer.List(
-            "name",
-            message="Which course do you want to update?",
-            choices=course_choices,
+            "answer",
+            message=msg,
+            choices=["Yes", "No"],
+        )
+    ]
+    if inquirer.prompt(question)["answer"] == "Yes":
+        return True
+    return False
+
+
+def list_prompt(choices, msg):
+    question = [
+        inquirer.List(
+            "answer",
+            message=msg,
+            choices=choices,
         ),
     ]
-    return inquirer.prompt(question_course)["name"]
+    return inquirer.prompt(question)["answer"]
 
 
 def update_assignment_response(cycle_choices, progress_choices):

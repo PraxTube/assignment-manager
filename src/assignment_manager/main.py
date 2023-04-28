@@ -16,11 +16,11 @@ def add():
 
 
 @app.command()
-def show(one: bool = False):
+def show(one: bool = False, sort: bool = False):
     if one:
         assignments.show_specific_assignment()
     else:
-        assignments.show_all_assignments()
+        assignments.show_all_assignments(sort)
 
 
 @app.command()
