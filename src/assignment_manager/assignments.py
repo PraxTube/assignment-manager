@@ -15,7 +15,7 @@ from assignment_manager import io
 def _find_next_deadline(assignment_data):
     current_date = datetime.today()
     for i, d in enumerate(assignment_data):
-        if datetime.strptime(d[1], "%d.%m.%Y") >= current_date:
+        if (datetime.strptime(d[1], "%d.%m.%Y") - current_date).days >= -1:
             return i
     return len(assignment_data) - 1
 
@@ -39,7 +39,7 @@ def get_table_rows():
         remaing_days = (
             datetime.strptime(data[key][cycle][1], "%d.%m.%Y")
             - datetime.today()
-        ).days
+        ).days + 1
         table_rows.append(
             [
                 key,
