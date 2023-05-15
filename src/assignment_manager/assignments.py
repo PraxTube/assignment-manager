@@ -126,7 +126,7 @@ def add_assignment():
         data = load_data()
 
     if params[0] in data:
-        raise ValueError("Name already exists!", name, data.keys())
+        raise ValueError("Name already exists!", params[0], data.keys())
 
     progress = generate_dates(params[1], params[2], params[3], params[4])
     data[params[0]] = progress

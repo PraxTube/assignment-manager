@@ -1,5 +1,3 @@
-from datetime import datetime, timedelta
-
 import typer
 
 from assignment_manager import assignments

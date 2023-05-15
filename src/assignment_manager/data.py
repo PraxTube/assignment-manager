@@ -69,7 +69,10 @@ def get_backup_data_file_path():
 def load_data():
     if data_file_empty():
         raise EOFError(
-            "The data file is empty. You should first add assignments before accessing them.",
+            (
+                "The data file is empty. "
+                "You should first add assignments before accessing them."
+            ),
             get_data_file_path(),
         )
     with open(get_data_file_path(), "r") as f:
