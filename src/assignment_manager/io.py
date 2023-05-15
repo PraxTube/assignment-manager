@@ -17,6 +17,10 @@ def print_table(table_headers, table_rows):
     print(table)
 
 
+def print_msg(msg):
+    print(msg)
+
+
 def confirmation_prompt(msg=""):
     if msg != "":
         print(msg)

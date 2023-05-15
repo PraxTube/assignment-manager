@@ -21,7 +21,10 @@ def _find_next_deadline(assignment_data):
 
 
 def sort_data(row_data, sort_index, ascending=True):
-    if sort_index < 0 or sort_index >= len(row_data):
+    if len(row_data) == 0:
+        raise ValueError("The row data musn't be empty!", row_data)
+
+    if sort_index < 0 or sort_index >= len(row_data[0]):
         raise ValueError(
             "The given index must be in range of the row_data",
             sort_index,
@@ -55,6 +58,13 @@ def get_table_rows():
 def show_all_assignments(sort):
     table_headers = ["Name", "Start", "Deadline", "Progress", "Days"]
     table_rows = get_table_rows()
+
+    if len(table_rows) == 0:
+        io.print_msg(
+            "\nYou have not added any assignments so far. "
+            "You can do that by running [bold]assman add[/bold]."
+        )
+        return
 
     if sort:
         sort_index = table_headers.index(
