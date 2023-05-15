@@ -1,12 +1,27 @@
 # Assignment Manager
 
 A terminal based assignment-manager written in python.
-It can also handle both one-time tasks and reoccuring
+It can handle both one-time tasks and recurring
 assignments. Also allows you to track your progress.
 
 <p align="center">
     <img src="docs/demo/showcase.gif" alt="animated" />
 </p>
+
+## Features
+
+The following features are present in the current version
+
+- Reoccuring assignments
+- Track progress on each assignment
+- Display assignments in sorted table
+- Make back up of assignment data
+- Edit existing assignments
+
+And these features still need to be implemented
+
+- [ ] Special class of one-time assignments
+- [ ] Undo last action taken
 
 ## Prerequisites
 
@@ -66,3 +81,25 @@ $ assman --help
 │ update                                                                                           │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
+
+Note that some commands have some subcommands
+
+```
+$ assman backup --help
+
+╭─ Commands ───────────────────────────────────────────────────────────────────╮
+│ copy              Copy the data file. This will OVERWRITE the BACKUP file    │
+│ paste             Paste the backup file. This will OVERWRITE the DATA file   │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+$ assman show --help
+
+╭─ Options ────────────────────────────────────────────────────────────────────╮
+│ --one     --no-one       [default: no-one]                                   │
+│ --sort    --no-sort      [default: no-sort]                                  │
+╰──────────────────────────────────────────────────────────────────────────────╯
+```
+
+## Contributing
+
+Contributions of any kind to this project are very welcome!
